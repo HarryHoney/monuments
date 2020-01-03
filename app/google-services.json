@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "514521706717",
+    "firebase_url": "https://monuments-5eabc.firebaseio.com",
+    "project_id": "monuments-5eabc",
+    "storage_bucket": "monuments-5eabc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514521706717:android:eb43e8017888b6474aab34",
+        "android_client_info": {
+          "package_name": "com.example.harpreet.monuments"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514521706717-gpvktmpdjgtmvdtg4laauu7u1e616ouf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.harpreet.monuments",
+            "certificate_hash": "efe5b968f007b8dc01a5506429c27163a5424d55"
+          }
+        },
+        {
+          "client_id": "514521706717-9npf50ifjonlviee3d4vp2c774nllmsi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1ZHj8YPs4xB1x6uq3jWn8NXarGqJTyU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514521706717-9npf50ifjonlviee3d4vp2c774nllmsi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514521706717:android:aa90167eccd2e6bf4aab34",
+        "android_client_info": {
+          "package_name": "com.example.harpreet.visitorguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514521706717-j2iukcdqti7qfc9dbltgnv9np0gms6ft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.harpreet.visitorguide",
+            "certificate_hash": "efe5b968f007b8dc01a5506429c27163a5424d55"
+          }
+        },
+        {
+          "client_id": "514521706717-9npf50ifjonlviee3d4vp2c774nllmsi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1ZHj8YPs4xB1x6uq3jWn8NXarGqJTyU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514521706717-9npf50ifjonlviee3d4vp2c774nllmsi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
