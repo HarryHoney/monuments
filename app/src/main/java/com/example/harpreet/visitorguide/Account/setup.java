@@ -167,7 +167,9 @@ public class setup extends AppCompatActivity {
         if(place.equals("Select Country"))
         {
             Toast.makeText(setup.this,"Please select country",Toast.LENGTH_SHORT).show();
+
             setup_progressbar.setVisibility(View.INVISIBLE);
+            return;
         }
 
         if(user_id.isEmpty()||name.isEmpty()||age.isEmpty()||mail.isEmpty())
@@ -188,7 +190,7 @@ public class setup extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        AndroidNetworking.post("make-api-for-this/createUser")
+        AndroidNetworking.post("https://us-central1-monuments-5eabc.cloudfunctions.net/app/upload")
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -202,7 +204,7 @@ public class setup extends AppCompatActivity {
                     }
                     @Override
                     public void onError(ANError error) {
-                        Toast.makeText(setup.this,error.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(setup.this,"Error:" +error.toString(),Toast.LENGTH_SHORT).show();
                         setup_progressbar.setVisibility(View.INVISIBLE);
                     }
                 });

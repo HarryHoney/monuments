@@ -63,7 +63,6 @@ public class register extends AppCompatActivity {
                 String mail=reg_email.getText().toString()+"@goa.com";
                 String Password=reg_password.getText().toString();
                 String confirm_Password=reg_confirm_password.getText().toString();
-                final String Name = reg_name.getText().toString();
 
                 if(!TextUtils.isEmpty(mail)&&!TextUtils.isEmpty(Password)&&!TextUtils.isEmpty(confirm_Password))
                 {

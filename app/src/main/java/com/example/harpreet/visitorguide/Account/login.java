@@ -85,7 +85,7 @@ public class login extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(login.this,"Please Enter Both Email & Password",Toast.LENGTH_SHORT).show();
+            Toast.makeText(login.this,"Please Enter Both UserName & Password",Toast.LENGTH_SHORT).show();
         }
 
         progressBar.setVisibility(View.INVISIBLE);

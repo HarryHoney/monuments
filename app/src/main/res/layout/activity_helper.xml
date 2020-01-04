@@ -6,4 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".helper">
 
+    <edu.arbelkilani.compass.Compass
+        android:id="@+id/compass_1"
+        android:layout_width="75dp"
+        android:layout_height="67dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="293dp"
+        app:border_color="@color/red"
+        app:degree_color="@color/blue"
+        app:degree_value_color="@color/colorAccent"
+        app:degrees_step="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:needle="@drawable/ic_needle_2"
+        app:orientation_labels_color="@color/red"
+        app:show_border="false"
+        app:show_degree_value="false"
+        app:show_orientation_labels="true" />
+
+
 </android.support.constraint.ConstraintLayout>
