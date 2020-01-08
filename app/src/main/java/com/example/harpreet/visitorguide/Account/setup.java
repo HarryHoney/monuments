@@ -13,6 +13,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.harpreet.visitorguide.MainActivity;
 import com.example.harpreet.visitorguide.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,14 +84,14 @@ public class setup extends AppCompatActivity {
                 .addPathParameter("id", user_id)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
+                .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
-                    public void onResponse(JSONArray res) {
+                    public void onResponse(JSONObject res) {
 
                         try {
-                            JSONObject obj = res.getJSONObject(0);
+                            JSONObject obj = res;
                             String id,name,age,mail,place;
-//                            [
+//
 //                                    {
 //                                        'id':'kjhlc',
 //                                        'name':'',
@@ -98,7 +99,7 @@ public class setup extends AppCompatActivity {
 //                                        'country':'',
 //                                        'age':''
 //                                    }
-//                            ]
+//
 //                            or [ { 'id':'' } ]
                             id = (String) obj.get("id");
 
@@ -194,20 +195,22 @@ public class setup extends AppCompatActivity {
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
                 .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
+                .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         Toast.makeText(setup.this,"Done",Toast.LENGTH_SHORT).show();
                         setup_progressbar.setVisibility(View.INVISIBLE);
                         startActivity(new Intent(setup.this,MainActivity.class));
                         finish();
                     }
+
                     @Override
-                    public void onError(ANError error) {
-                        Toast.makeText(setup.this,"Error:" +error.toString(),Toast.LENGTH_SHORT).show();
+                    public void onError(ANError anError) {
+                        Toast.makeText(setup.this,"Error:" +anError.toString(),Toast.LENGTH_SHORT).show();
                         setup_progressbar.setVisibility(View.INVISIBLE);
                     }
                 });
+
 
 
     }

@@ -4,12 +4,16 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.Camera"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-feature android:name="android.hardware.Camera" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,9 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <meta-data android:name="com.google.android.geo.API_Key"
-            android:value="@string/key"></meta-data>
+        <meta-data
+            android:name="com.google.android.geo.API_Key"
+            android:value="@string/key" />
 
         <activity android:name=".helper">
             <intent-filter>
@@ -29,10 +33,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".helper"></activity>-->
-        <activity android:name=".Account.login"></activity>
-        <activity android:name=".Account.setup"></activity>
-        <activity android:name=".Account.register"></activity>
+         <!--<activity android:name=".helper"></activity>-->
+        <activity android:name=".Account.login" />
+        <activity android:name=".Account.setup" />
+        <activity android:name=".Account.register" />
+        <!--<activity android:name=".Camera" />-->
     </application>
 
 </manifest>

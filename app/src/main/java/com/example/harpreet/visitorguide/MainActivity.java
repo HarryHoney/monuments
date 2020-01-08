@@ -1,73 +1,97 @@
 
 package com.example.harpreet.visitorguide;
 
+import android.Manifest;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Camera;
-import android.media.CameraProfile;
-import android.opengl.GLSurfaceView;
-import android.support.design.widget.FloatingActionButton;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
-
 import com.example.harpreet.visitorguide.Account.login;
 import com.example.harpreet.visitorguide.Account.setup;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.io.IOException;
-
-import eu.livotov.labs.android.camview.CameraLiveView;
-import eu.livotov.labs.android.camview.camera.PictureProcessingCallback;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
+    //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=AIzaSyB1ZHj8YPs4xB1x6uq3jWn8NXarGqJTyU8
     FirebaseAuth mauth;
-    FloatingActionButton floatingActionButton;
-    CameraLiveView cameraLiveView;
-    PictureProcessingCallback callback;
+    CircleImageView circle1;
+    CircleImageView circle2;
+    CircleImageView circle3;
+    CircleImageView circle4;
+    CircleImageView circle5;
+    CircleImageView circle6;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sendtoLogin();
 
-        callback = new PictureProcessingCallback() {
-            @Override
-            public void onShutterTriggered() {
-//                Toast.makeText(MainActivity.this,"A",Toast.LENGTH_LONG).show();
-            }
+        circle1 = findViewById(R.id.option1);
+        circle2 = findViewById(R.id.option2);
+        circle3 = findViewById(R.id.option3);
+        circle4 = findViewById(R.id.option4);
+        circle5 = findViewById(R.id.option5);
+        circle6 = findViewById(R.id.option6);
 
-            @Override
-            public void onRawPictureTaken(byte[] rawData) {
-//                Toast.makeText(MainActivity.this,"B",Toast.LENGTH_LONG).show();cameraLiveView.resumeDisplay();
-            }
-
-            @Override
-            public void onPictureTaken(byte[] jpegData) {
-                Bitmap img = BitmapUtils.convertCompressedByteArrayToBitmap(jpegData);
-                BitmapUtils.storePhotoOnDisk(img);
-                cameraLiveView.startCamera();
-            }
-        };
-
-        floatingActionButton = findViewById(R.id.floatingActionButton2);
-        cameraLiveView = findViewById(R.id.camera);
-        cameraLiveView.startCamera();
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        circle1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraLiveView.getController().takePicture(callback);
+
             }
         });
+
+        circle2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(),Camera.class);
+                intent.putExtra("key","");
+                startActivity(intent);
+            }
+        });
+
+        circle3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(),Camera.class);
+                intent.putExtra("key","");
+                startActivity(intent);
+            }
+        });
+
+        circle4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(),Camera.class);
+                intent.putExtra("key","");
+                startActivity(intent);
+            }
+        });
+
+        circle5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(),Camera.class);
+                intent.putExtra("key","");
+                startActivity(intent);
+            }
+        });
+
+        circle6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(),Camera.class);
+                intent.putExtra("key","");
+                startActivity(intent);
+            }
+        });
+
 
 
     }
@@ -108,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CAMERA},123);
         sendtoLogin();
     }
 
@@ -127,7 +152,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 123: {
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                }
+            }
+        }
+    }//function ends here
 
 }
 
