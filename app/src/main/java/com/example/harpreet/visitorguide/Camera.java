@@ -1,11 +1,8 @@
 package com.example.harpreet.visitorguide;
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -24,10 +21,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
-
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import eu.livotov.labs.android.camview.CameraLiveView;
 import eu.livotov.labs.android.camview.camera.PictureProcessingCallback;
@@ -72,32 +66,12 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
                 Bitmap img = BitmapUtils.convertCompressedByteArrayToBitmap(jpegData);
 
                 cameraLiveView.startCamera();
-                workOndetails(jpegData);
             }
         };
 
     }
 
 
-
-    private void workOndetails(byte[] img) {
-
-        AndroidNetworking.post("Image upload done for Machine Learning")
-                .addByteBody(img)
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        Toast.makeText(Camera.this, "Sorry some error occurred", Toast.LENGTH_SHORT).show();
-                    }
-                 });
-
-    }
 
     public void SearchPlace(View view) {
         if(cameraLiveView.getController()!=null)

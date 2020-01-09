@@ -1,11 +1,13 @@
 package com.example.harpreet.visitorguide;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -57,7 +59,6 @@ public final class BitmapUtils {
                 folder.mkdirs();
 
                 String format = "forML";
-
                 File photoFile = new File(folder, format.concat(".jpg"));
 
                 if (photoFile.exists()) {
@@ -71,7 +72,7 @@ public final class BitmapUtils {
 
                     fos.flush();
                     fos.close();
-                } catch (java.io.IOException e) {
+                } catch (IOException e) {
                     Log.e("PictureDemo", "Exception in photoCallback", e);
                 }
 

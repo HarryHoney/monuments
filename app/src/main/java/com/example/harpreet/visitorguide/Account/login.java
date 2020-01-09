@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.harpreet.visitorguide.MLCamera;
 import com.example.harpreet.visitorguide.MainActivity;
 import com.example.harpreet.visitorguide.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,7 +63,7 @@ public class login extends AppCompatActivity {
         String Email=email.getText().toString()+"@goa.com";
         String Password=password.getText().toString();
 
-        if(!TextUtils.isEmpty(Email)&&!TextUtils.isEmpty(Password))
+        if(!TextUtils.isEmpty(Password))
         {
             progressBar.setVisibility(View.VISIBLE);
             mauth.signInWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -72,6 +73,7 @@ public class login extends AppCompatActivity {
                     {
                         startActivity(new Intent(login.this,MainActivity.class));
                         finish();
+//                        startActivity(new Intent(login.this,MLCamera.class));
                     }
                     else
                     {

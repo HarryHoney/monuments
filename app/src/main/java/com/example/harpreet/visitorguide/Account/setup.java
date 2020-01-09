@@ -80,7 +80,7 @@ public class setup extends AppCompatActivity {
         final EditText Mail = findViewById(R.id.setup_mail);
         final TextView country = findViewById(R.id.country);
 
-        AndroidNetworking.get("check for data in database")
+        AndroidNetworking.get("https://us-central1-monuments-5eabc.cloudfunctions.net/app/check")
                 .addPathParameter("id", user_id)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -91,16 +91,7 @@ public class setup extends AppCompatActivity {
                         try {
                             JSONObject obj = res;
                             String id,name,age,mail,place;
-//
-//                                    {
-//                                        'id':'kjhlc',
-//                                        'name':'',
-//                                        'mail':'',
-//                                        'country':'',
-//                                        'age':''
-//                                    }
-//
-//                            or [ { 'id':'' } ]
+
                             id = (String) obj.get("id");
 
                             if(!id.equals(""))

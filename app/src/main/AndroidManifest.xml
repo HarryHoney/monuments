@@ -9,7 +9,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-feature android:name="android.hardware.Camera" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,18 +26,22 @@
             android:name="com.google.android.geo.API_Key"
             android:value="@string/key" />
 
-        <activity android:name=".helper">
+        <activity android:name=".MLCamera">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <!--<activity android:name=".helper"></activity>-->
+         <activity android:name=".helper"></activity>
         <activity android:name=".Account.login" />
         <activity android:name=".Account.setup" />
         <activity android:name=".Account.register" />
-        <!--<activity android:name=".Camera" />-->
+         <activity android:name=".Camera" />
+        <!--<activity android:name=".MLCamera"></activity>-->
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>
