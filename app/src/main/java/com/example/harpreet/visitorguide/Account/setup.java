@@ -17,6 +17,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.harpreet.visitorguide.MainActivity;
 import com.example.harpreet.visitorguide.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.JsonObject;
 import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
@@ -80,8 +81,15 @@ public class setup extends AppCompatActivity {
         final EditText Mail = findViewById(R.id.setup_mail);
         final TextView country = findViewById(R.id.country);
 
-        AndroidNetworking.get("https://us-central1-monuments-5eabc.cloudfunctions.net/app/check")
-                .addPathParameter("id", user_id)
+        JSONObject obj = new JSONObject();
+        try{
+            obj.put("id",user_id);
+        }catch (Exception e)
+        {
+
+        }
+        AndroidNetworking.post("https://us-central1-monuments-5eabc.cloudfunctions.net/app/check")
+                .addJSONObjectBody(obj)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

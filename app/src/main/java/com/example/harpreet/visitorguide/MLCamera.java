@@ -1,7 +1,7 @@
 package com.example.harpreet.visitorguide;
 
 import android.Manifest;
-import android.accounts.Account;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -31,10 +31,14 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONObject;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MLCamera extends AppCompatActivity {
 
+    ProgressDialog dialog;
     private FirebaseAuth mauth;
     private StorageReference storageReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,9 @@ public class MLCamera extends AppCompatActivity {
 
     private void doSomethingWithCroppedImage(Uri outputUri) {
 
+        CircleImageView view = findViewById(R.id.placeImage);
+        view.setImageURI(outputUri);
+
         final StorageReference image_path=storageReference.child("ML_Image").child("scan.jpg");//storing the image to storage on specified path
 
         image_path.putFile(outputUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -97,6 +104,9 @@ public class MLCamera extends AppCompatActivity {
 
     private void workOndetails(Uri image) {
 
+        dialog = new ProgressDialog(this);
+        dialog.show(this, "Image Processing",
+                "Loading. Please wait...", true);
         JSONObject obj = new JSONObject();
         try {
             obj.put("downloadUrl", image.toString());
@@ -116,13 +126,12 @@ public class MLCamera extends AppCompatActivity {
                         // I will get Image names here
 
 
-
-
-
+                        dialog.dismiss();
                     }
                     @Override
                     public void onError(ANError error) {
                         Toast.makeText(MLCamera.this, "Sorry some error occurred", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 });
 
@@ -130,6 +139,7 @@ public class MLCamera extends AppCompatActivity {
 
     private void takePic()
     {
+
         storageReference=FirebaseStorage.getInstance().getReference(); //getting the reference of the storage
         //that is the path to storage on the server is saved here
 
