@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 import com.example.harpreet.visitorguide.Account.login;
 import com.example.harpreet.visitorguide.Account.setup;
+import com.example.harpreet.visitorguide.sampledata.GPStracker;
 import com.google.firebase.auth.FirebaseAuth;
 
 import de.hdodenhof.circleimageview.CircleImageView;

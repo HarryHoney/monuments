@@ -14,6 +14,13 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.example.harpreet.visitorguide.sampledata.Server;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
@@ -58,18 +65,27 @@ public class helper extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helper);
-        vv = findViewById(R.id.testing);
-        v=  findViewById(R.id.textView2);
 
-        File file = new File("/storage/emulated/0/MyFolder/forML.jpg");
-        if(file.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-            vv.setImageBitmap(myBitmap);
-            v.setText("dfsasc");
+        v = findViewById(R.id.textView2);
+
+        AndroidNetworking.get("http://ec2-3-6-91-12.ap-south-1.compute.amazonaws.com:8080/checkaws")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Toast.makeText(helper.this, response, Toast.LENGTH_LONG).show();
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                        Toast.makeText(helper.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         }
 
     }
 
 
-}
+

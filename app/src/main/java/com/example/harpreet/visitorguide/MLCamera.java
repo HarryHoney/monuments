@@ -11,20 +11,25 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.harpreet.visitorguide.Account.login;
+import com.example.harpreet.visitorguide.sampledata.Server;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -39,14 +44,14 @@ public class MLCamera extends AppCompatActivity {
     ProgressDialog dialog;
     private FirebaseAuth mauth;
     private StorageReference storageReference;
-
-
+    private String ModelURL;
+    TextView desc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mlcamera);
 
-
+        desc = findViewById(R.id.desc);
         mauth=FirebaseAuth.getInstance();
         if(mauth!=null)
         takePic();
@@ -61,7 +66,6 @@ public class MLCamera extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -103,13 +107,41 @@ public class MLCamera extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+
+    private void workOndetails(final Uri image) {
+
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Server server = dataSnapshot.getValue(Server.class);
+                if(server==null)
+                    Toast.makeText(MLCamera.this, "empty", Toast.LENGTH_SHORT).show();
+                else
+                {
+                    ModelURL = server.model;
+                    callToModel(image);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(MLCamera.this, "Unable to read", Toast.LENGTH_SHORT).show();
+            }
+        };
+        mDatabase.addValueEventListener(postListener);
+
+
+
+
     }
 
-    private void workOndetails(Uri image) {
+    private void callToModel(Uri image) {
 
+        dialog.setTitle("Image Processing");
         JSONObject obj = new JSONObject();
         try {
             obj.put("downloadUrl", image.toString());
@@ -117,23 +149,58 @@ public class MLCamera extends AppCompatActivity {
         {
 
         }
-        AndroidNetworking.post("Image upload done for Machine Learning")
+
+        AndroidNetworking.post(ModelURL)
                 .addJSONObjectBody(obj)
                 .setPriority(Priority.MEDIUM)
                 .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
+                .getAsString(new StringRequestListener() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
 
 
-                        // I will get Image names here
+                        String data[] = response.split("'");
+                        String name = data[3];
+                        double prob = Double.parseDouble(data[6].substring(2,data[6].length()-3))+40;
 
+                        dialog.setTitle("Fetching Data");
+                        callAtWikipage(name);
 
-                        dialog.dismiss();
+//                        if(prob<40){
+//
+//                        }
+//                        else {
+//                            dialog.setTitle("Fetching Data");
+//                            callAtWikipage(name);
+//
+//                        }
                     }
                     @Override
                     public void onError(ANError error) {
-                        Toast.makeText(MLCamera.this, "Sorry some error occurred", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MLCamera.this, "Dinesh:"+error.toString(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+
+    }
+
+    private void callAtWikipage(final String name) {
+
+        AndroidNetworking.get("https://wikifun.herokuapp.com/info")
+                .setPriority(Priority.MEDIUM)
+                .addQueryParameter("location",name)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        desc.setText(name+" : "+response);
+                        dialog.dismiss();
+
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                        Toast.makeText(MLCamera.this, "Ashu:"+error.toString(), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
@@ -141,18 +208,17 @@ public class MLCamera extends AppCompatActivity {
     }
 
 
-
     private void takePic()
     {
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading Data...");
-        dialog.setTitle("Image Processing");
+        dialog.setTitle("Image Uploading");
         dialog.show();
 
 
         storageReference=FirebaseStorage.getInstance().getReference(); //getting the reference of the storage
-        //that is the path to storage on the server is saved herer
+        //that is the path to storage on the server is saved here
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

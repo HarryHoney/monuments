@@ -2,7 +2,6 @@ package com.example.harpreet.visitorguide;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,13 +14,9 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import org.json.JSONArray;
+import com.example.harpreet.visitorguide.sampledata.BitmapUtils;
+import com.example.harpreet.visitorguide.sampledata.GPStracker;
 
 import eu.livotov.labs.android.camview.CameraLiveView;
 import eu.livotov.labs.android.camview.camera.PictureProcessingCallback;

@@ -1,4 +1,4 @@
-package com.example.harpreet.visitorguide;
+package com.example.harpreet.visitorguide.sampledata;
 
 
 import android.Manifest;
@@ -22,7 +22,7 @@ import android.widget.Toast;
 public class GPStracker implements LocationListener{
 
     Context context;
-    boolean isGPSEnabled;
+    public boolean isGPSEnabled;
     public GPStracker(Context c){
 
         context = c;
