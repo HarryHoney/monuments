@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class MLCamera extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mlcamera);
 
+
         mauth=FirebaseAuth.getInstance();
         if(mauth!=null)
         takePic();
@@ -60,7 +62,6 @@ public class MLCamera extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -102,11 +103,13 @@ public class MLCamera extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void workOndetails(Uri image) {
 
-        dialog = new ProgressDialog(this);
-        dialog.show(this, "Image Processing",
-                "Loading. Please wait...", true);
         JSONObject obj = new JSONObject();
         try {
             obj.put("downloadUrl", image.toString());
@@ -137,11 +140,19 @@ public class MLCamera extends AppCompatActivity {
 
     }
 
+
+
     private void takePic()
     {
 
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading Data...");
+        dialog.setTitle("Image Processing");
+        dialog.show();
+
+
         storageReference=FirebaseStorage.getInstance().getReference(); //getting the reference of the storage
-        //that is the path to storage on the server is saved here
+        //that is the path to storage on the server is saved herer
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

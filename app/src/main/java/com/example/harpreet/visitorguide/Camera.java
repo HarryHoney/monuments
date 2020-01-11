@@ -116,40 +116,41 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
     protected void onStart() {
         super.onStart();
         gps = new GPStracker(this);
-        if(gps!=null) {
-            dialog = ProgressDialog.show(this, "Hi User",
-                    "Loading. Please wait...", true);
-            l = gps.getLocation();
-            String key = getIntent().getStringExtra("key");
-            AndroidNetworking.get("heroku api")
-                    .setPriority(Priority.MEDIUM)
-                    .addQueryParameter("key",key)
-                    .addQueryParameter("lat",l.getLatitude()+"")
-                    .addQueryParameter("long",l.getLongitude()+"")
-                    .build()
-                    .getAsJSONArray(new JSONArrayRequestListener() {
-
-                        @Override
-                        public void onResponse(JSONArray response) {
-
-                            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.direction);
-
-//                            Bitmap finalImage = addSpots(bm,);
-                            dialog.dismiss();
-                        }
-
-                        @Override
-                        public void onError(ANError anError) {
-                        Toast.makeText(Camera.this, "Sorry some error occurred", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                        }
-                    });
-        }
-        else
-        {
-            Toast.makeText(this, "Unable to fetch location", Toast.LENGTH_SHORT).show();
-            finish();
-        }
+        l = gps.getLocation();
+//        if(gps!=null) {
+//            dialog = ProgressDialog.show(this, "Hi User",
+//                    "Loading. Please wait...", true);
+//            l = gps.getLocation();
+//            String key = getIntent().getStringExtra("key");
+//            AndroidNetworking.get("heroku api")
+//                    .setPriority(Priority.MEDIUM)
+//                    .addQueryParameter("key",key)
+//                    .addQueryParameter("lat",l.getLatitude()+"")
+//                    .addQueryParameter("long",l.getLongitude()+"")
+//                    .build()
+//                    .getAsJSONArray(new JSONArrayRequestListener() {
+//
+//                        @Override
+//                        public void onResponse(JSONArray response) {
+//
+//                            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.direction);
+//
+////                            Bitmap finalImage = addSpots(bm,);
+//                            dialog.dismiss();
+//                        }
+//
+//                        @Override
+//                        public void onError(ANError anError) {
+//                        Toast.makeText(Camera.this, "Sorry some error occurred", Toast.LENGTH_SHORT).show();
+//                            dialog.dismiss();
+//                        }
+//                    });
+//        }
+//        else
+//        {
+//            Toast.makeText(this, "Unable to fetch location", Toast.LENGTH_SHORT).show();
+//            finish();
+//        }
     }
 
 

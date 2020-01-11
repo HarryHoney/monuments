@@ -1,5 +1,6 @@
 package com.example.harpreet.visitorguide.Account;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class setup extends AppCompatActivity {
     private ProgressBar setup_progressbar;
     private CountryPicker picker;
     private String user_id="";
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,6 @@ public class setup extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setup_progressbar.setVisibility(View.VISIBLE);
         mauth=FirebaseAuth.getInstance();
         if(mauth.getCurrentUser()==null)
         {
@@ -88,6 +89,11 @@ public class setup extends AppCompatActivity {
         {
 
         }
+
+        dialog = new ProgressDialog(this);
+        dialog.setTitle("Checking Data");
+        dialog.setMessage("Please Wait..");
+        dialog.show();
         AndroidNetworking.post("https://us-central1-monuments-5eabc.cloudfunctions.net/app/check")
                 .addJSONObjectBody(obj)
                 .setPriority(Priority.HIGH)
@@ -100,36 +106,34 @@ public class setup extends AppCompatActivity {
                             JSONObject obj = res;
                             String id,name,age,mail,place;
 
-                            id = (String) obj.get("id");
+                            id = obj.get("id").toString();
 
-                            if(!id.equals(""))
+                            if(!id.equals("null"))
                             {
-                                name = (String) obj.get("name");
+                                name = obj.get("name").toString();
                                 Name.setText(name);
 
-                                age = (String) obj.get("age");
+                                age = (String) obj.get("age").toString();
                                 Age.setText(age);
 
-                                place = (String) obj.get("country");
+                                place = (String) obj.get("country").toString();
                                 country.setText(place);
 
-                                mail = (String) obj.get("mail");
+                                mail = (String) obj.get("mail").toString();
                                 Mail.setText(mail);
                             }
-                            setup_progressbar.setVisibility(View.INVISIBLE);
+                            dialog.dismiss();
 
                         } catch (JSONException e) {
-                            setup_progressbar.setVisibility(View.INVISIBLE);
+                            dialog.dismiss();
                         }
 
                     }
                     @Override
                     public void onError(ANError error) {
-                        setup_progressbar.setVisibility(View.INVISIBLE);
+                        dialog.dismiss();
                     }
                 });
-
-
     }
 
     public void submitdetails(View view) {

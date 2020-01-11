@@ -22,11 +22,11 @@ import android.widget.Toast;
 public class GPStracker implements LocationListener{
 
     Context context;
-
+    boolean isGPSEnabled;
     public GPStracker(Context c){
 
         context = c;
-
+        isGPSEnabled = false;
     }
 
     public Location getLocation(){
@@ -39,8 +39,7 @@ public class GPStracker implements LocationListener{
 
         LocationManager lm=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
-        boolean isGPSEnabled=lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
+        isGPSEnabled=lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
         if(isGPSEnabled)
 
@@ -55,7 +54,7 @@ public class GPStracker implements LocationListener{
         else
         {
 
-            Toast.makeText(context,"Please enable GPS", Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"Please enable GPS", Toast.LENGTH_SHORT).show();
 
         }
 

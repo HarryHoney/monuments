@@ -4,6 +4,7 @@ package com.example.harpreet.visitorguide;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     CircleImageView circle4;
     CircleImageView circle5;
     CircleImageView circle6;
+    Intent intent;
+    Location l;
+    GPStracker gps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +44,18 @@ public class MainActivity extends AppCompatActivity {
         circle5 = findViewById(R.id.option5);
         circle6 = findViewById(R.id.option6);
 
+        gps = new GPStracker(this);
+        l = gps.getLocation();
+
         circle1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(l!=null){
+                intent = new Intent(getBaseContext(),Camera.class);
+                intent.putExtra("key","temples");
+                startActivity(intent);}
+                else{makeaToast();}
 
             }
         });
@@ -50,50 +63,65 @@ public class MainActivity extends AppCompatActivity {
         circle2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(),Camera.class);
+                if(l!=null){
+                intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","");
-                startActivity(intent);
+                startActivity(intent);}else{makeaToast();}
             }
         });
 
         circle3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(),Camera.class);
+                if(l!=null){
+                intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","");
-                startActivity(intent);
+                startActivity(intent);}else{makeaToast();}
             }
         });
 
         circle4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(),Camera.class);
+
+                if(l!=null){
+                intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","");
-                startActivity(intent);
+                startActivity(intent);}
+                else
+                {
+                    makeaToast();
+                }
             }
         });
 
         circle5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(),Camera.class);
-                intent.putExtra("key","");
-                startActivity(intent);
+
+                startActivity(new Intent(MainActivity.this,MLCamera.class));
+
             }
         });
 
         circle6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(),Camera.class);
+                if(l!=null){
+                intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","");
-                startActivity(intent);
+                startActivity(intent);}else{makeaToast();}
             }
         });
 
 
 
+    }
+
+    private void makeaToast() {
+        if(!gps.isGPSEnabled){
+            Toast.makeText(this, "Please enable you GPS", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

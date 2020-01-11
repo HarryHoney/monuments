@@ -60,7 +60,7 @@ public class register extends AppCompatActivity {
         reg_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mail=reg_email.getText().toString()+"@goa.com";
+                String mail=reg_email.getText().toString();
                 String Password=reg_password.getText().toString();
                 String confirm_Password=reg_confirm_password.getText().toString();
 
@@ -71,7 +71,7 @@ public class register extends AppCompatActivity {
                     {
 
                         pp.setVisibility(View.VISIBLE);
-                        mauth.createUserWithEmailAndPassword(mail,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        mauth.createUserWithEmailAndPassword(mail+"@goa.com",Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful())
