@@ -39,28 +39,23 @@
         android:text="Search View" />
 </RelativeLayout>
 
+
+    <ImageView
+        android:id="@+id/compass"
+        android:layout_width="79dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="72.5dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="50dp"
+        app:srcCompat="@drawable/arrow1" />
     <ImageView
         android:id="@+id/compass_fix"
-        android:layout_width="124dp"
-        android:layout_height="121dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         app:srcCompat="@drawable/direction" />
 
-    <ImageView
-        android:id="@+id/compass"
-        android:layout_width="50dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="50dp"
-        app:srcCompat="@drawable/arrow1" />
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Switch" />
 
 </FrameLayout>

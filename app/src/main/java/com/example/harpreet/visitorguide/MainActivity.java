@@ -46,12 +46,11 @@ public class MainActivity extends AppCompatActivity {
         circle6 = findViewById(R.id.option6);
 
         gps = new GPStracker(this);
-        l = gps.getLocation();
 
         circle1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","temples");
@@ -64,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         circle2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","");
@@ -74,17 +74,19 @@ public class MainActivity extends AppCompatActivity {
         circle3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","");
-                startActivity(intent);}else{makeaToast();}
+                startActivity(intent);}
+                else{makeaToast();}
             }
         });
 
         circle4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","");
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         circle6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","");
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeaToast() {
-        if(!gps.isGPSEnabled){
+        if(!gps.isGPSenable()){
             Toast.makeText(this, "Please enable you GPS", Toast.LENGTH_SHORT).show();
         }
     }

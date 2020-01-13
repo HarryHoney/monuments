@@ -1,7 +1,9 @@
 package com.example.harpreet.visitorguide;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -30,35 +32,31 @@ import java.io.File;
 public class helper extends AppCompatActivity  {
 
 
-//    ImageView v;
-
-//    Bitmap addSpots(Bitmap img, double data[][]){
-//        for(int i=0;i<data[0].length;i++){
-//            double x = 392.5 + data[0][i]*Math.sin(Math.toRadians(data[1][i]))*((double)511/(double)2000);
-//            double y = 383 + data[0][i]*Math.cos(Math.toRadians(data[1][i]))*((double)511/(double)2000);
-//
-//            img.setPixel((int)x,(int)y,Color.WHITE);
-//            img.setPixel((int)x+1,(int)y,Color.WHITE);
-//            img.setPixel((int)x,(int)y-1,Color.WHITE);
-//            img.setPixel((int)x+1,(int)y-1,Color.WHITE);
-//        }
-//        return img;
-//    }
-
     TextView v;ImageView vv;
     String string="";
 
-    Bitmap addSpots(Bitmap img, double data[][]){
+    void addSpots(double data[][]){
+
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.direction);
+        Canvas canvas = new Canvas();
+        Bitmap copy = bm.copy(bm.getConfig(),true);
+        int a = copy.getWidth();
+        int b = copy.getHeight();
+        int aa = canvas.getHeight();
+        int bb = canvas.getWidth();
+        v = findViewById(R.id.textView2);
+        v.setText((a)+"  "+(b)+"    "+(aa)+"  "+(bb));
+        canvas.setBitmap(copy);
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.YELLOW);
         for(int i=0;i<data[0].length;i++){
-            double x = 392.5 + data[0][i]*Math.sin(Math.toRadians(data[1][i]))*((double)450/(double)2000);
-            double y = 383 + data[0][i]*Math.cos(Math.toRadians(data[1][i]))*((double)450/(double)2000);
-//            string +=x+","+y+" ";
-            img.setPixel((int)x,(int)y,Color.WHITE);
-            img.setPixel((int)x+1,(int)y,Color.WHITE);
-            img.setPixel((int)x,(int)y-1,Color.WHITE);
-            img.setPixel((int)x+1,(int)y-1,Color.WHITE);
+            float x = (float) (a/2 + data[0][i]*Math.sin(Math.toRadians(data[1][i]))*((0.303*a)/(double)1500));
+            float y = (float) (b/2 - data[0][i]*Math.cos(Math.toRadians(data[1][i]))*((0.303*a)/(double)1500));
+            canvas.drawCircle(x,y,25,paint);
         }
-        return img;
+        ImageView v = findViewById(R.id.testing);
+        v.setImageBitmap(copy);
     }
 
     @Override
@@ -67,21 +65,14 @@ public class helper extends AppCompatActivity  {
         setContentView(R.layout.activity_helper);
 
         v = findViewById(R.id.textView2);
-
-        AndroidNetworking.get("http://ec2-3-6-91-12.ap-south-1.compute.amazonaws.com:8080/checkaws")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Toast.makeText(helper.this, response, Toast.LENGTH_LONG).show();
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        Toast.makeText(helper.this, error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        double arr[][]=new double[2][6];
+        arr[0][0]=1500;arr[1][0]=285;
+        arr[0][1]=1200;arr[1][1]=80;
+        arr[0][2]=0;arr[1][2]=70;
+        arr[0][3]=900;arr[1][3]=290;
+        arr[0][4]=223;arr[1][4]=15;
+        arr[0][5]=169;arr[1][5]=170;
+        addSpots(arr);
 
         }
 

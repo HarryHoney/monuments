@@ -163,17 +163,15 @@ public class MLCamera extends AppCompatActivity {
                         String name = data[3];
                         double prob = Double.parseDouble(data[6].substring(2,data[6].length()-3))+40;
 
-                        dialog.setTitle("Fetching Data");
-                        callAtWikipage(name);
+                        if(prob<50){
+                            dialog.dismiss();
+                            desc.setText("Sorry Data related to this image is not available!");
+                        }
+                        else {
+                            dialog.setTitle("Fetching Data");
+                            callAtWikipage(name);
 
-//                        if(prob<40){
-//
-//                        }
-//                        else {
-//                            dialog.setTitle("Fetching Data");
-//                            callAtWikipage(name);
-//
-//                        }
+                        }
                     }
                     @Override
                     public void onError(ANError error) {
@@ -188,13 +186,14 @@ public class MLCamera extends AppCompatActivity {
 
         AndroidNetworking.get("https://wikifun.herokuapp.com/info")
                 .setPriority(Priority.MEDIUM)
-                .addQueryParameter("location",name)
+                .addQueryParameter("location",name+" goa,India")
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
 
                         desc.setText(name+" : "+response);
+                        //inc count of res place
                         dialog.dismiss();
 
                     }

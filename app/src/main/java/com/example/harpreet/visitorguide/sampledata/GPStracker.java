@@ -22,11 +22,10 @@ import android.widget.Toast;
 public class GPStracker implements LocationListener{
 
     Context context;
-    public boolean isGPSEnabled;
+    LocationManager lm;
     public GPStracker(Context c){
 
         context = c;
-        isGPSEnabled = false;
     }
 
     public Location getLocation(){
@@ -37,11 +36,9 @@ public class GPStracker implements LocationListener{
             return null;
         }
 
-        LocationManager lm=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        lm=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
-        isGPSEnabled=lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        if(isGPSEnabled)
+        if(isGPSenable())
 
         {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,5,this);
@@ -62,6 +59,11 @@ public class GPStracker implements LocationListener{
 
     }
 
+    public boolean isGPSenable()
+    {
+
+        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
     @Override
 
     public void onProviderDisabled(String provider) {
