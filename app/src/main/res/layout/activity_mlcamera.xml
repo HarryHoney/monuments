@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/ml"
+    android:background="@drawable/background"
     android:layout_height="match_parent"
     tools:context=".MLCamera">
 
@@ -14,10 +14,10 @@
         android:layout_marginStart="101dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="101dp"
+        android:src="@drawable/taj"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button3"
@@ -47,14 +47,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/placeImage">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:textColor="@color/colorAccent"
-    android:id="@+id/desc"
-    android:scrollbars = "vertical"
-    android:textAlignment="center"
-    android:padding="7dp"
-    />
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="7dp"
+            android:scrollbars="vertical"
+            android:text="The Taj Mahal was designated as a UNESCO World Heritage Site in 1983 for being &quot;the jewel of Muslim art in India and one of the universally admired masterpieces of the world's heritage&quot;. It is regarded by many as the best example of Mughal architecture and a symbol of India's rich history. The Taj Mahal attracts 7–8 million visitors a year and in 2007, it was declared a winner of the New7Wonders of the World (2000–2007) initiative."
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent" />
     </android.support.v7.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/progressBarML"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/colorAccent"
+        android:indeterminate="true"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

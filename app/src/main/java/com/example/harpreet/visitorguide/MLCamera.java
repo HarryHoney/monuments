@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.androidnetworking.AndroidNetworking;
@@ -20,7 +21,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.harpreet.visitorguide.Account.login;
-import com.example.harpreet.visitorguide.sampledata.Server;
+import com.example.harpreet.visitorguide.UtilsFolder.Server;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -41,16 +42,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MLCamera extends AppCompatActivity {
 
-    ProgressDialog dialog;
+    private ProgressDialog dialog;
     private FirebaseAuth mauth;
     private StorageReference storageReference;
     private String ModelURL;
-    TextView desc;
+    private ProgressBar bar;
+    private TextView desc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mlcamera);
 
+        bar = findViewById(R.id.progressBarML);
+        bar.setVisibility(View.INVISIBLE);
         desc = findViewById(R.id.desc);
         mauth=FirebaseAuth.getInstance();
         if(mauth!=null)
@@ -144,13 +148,14 @@ public class MLCamera extends AppCompatActivity {
         dialog.setTitle("Image Processing");
         JSONObject obj = new JSONObject();
         try {
+//            Toast.makeText(this, image.toString(), Toast.LENGTH_SHORT).show();
             obj.put("downloadUrl", image.toString());
         }catch (Exception e)
         {
 
         }
-
-        AndroidNetworking.post(ModelURL)
+//        Toast.makeText(this, ModelURL, Toast.LENGTH_SHORT).show();
+        AndroidNetworking.post("http://"+ModelURL)
                 .addJSONObjectBody(obj)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -161,10 +166,10 @@ public class MLCamera extends AppCompatActivity {
 
                         String data[] = response.split("'");
                         String name = data[3];
-                        double prob = Double.parseDouble(data[6].substring(2,data[6].length()-3))+40;
-
-                        if(prob<50){
-                            dialog.dismiss();
+                        double prob = Double.parseDouble(data[6].substring(2,data[6].length()-3))*100;
+                        Toast.makeText(MLCamera.this, ""+prob, Toast.LENGTH_SHORT).show();
+                        if(prob<45){
+                            dialog.dismiss();bar.setVisibility(View.INVISIBLE);
                             desc.setText("Sorry Data related to this image is not available!");
                         }
                         else {
@@ -176,7 +181,7 @@ public class MLCamera extends AppCompatActivity {
                     @Override
                     public void onError(ANError error) {
                         Toast.makeText(MLCamera.this, "Dinesh:"+error.toString(), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        dialog.dismiss();bar.setVisibility(View.INVISIBLE);
                     }
                 });
 
@@ -200,7 +205,7 @@ public class MLCamera extends AppCompatActivity {
                     @Override
                     public void onError(ANError error) {
                         Toast.makeText(MLCamera.this, "Ashu:"+error.toString(), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        dialog.dismiss();bar.setVisibility(View.INVISIBLE);
                     }
                 });
 
@@ -214,7 +219,7 @@ public class MLCamera extends AppCompatActivity {
         dialog.setMessage("Loading Data...");
         dialog.setTitle("Image Uploading");
         dialog.show();
-
+        bar.setVisibility(View.VISIBLE);
 
         storageReference=FirebaseStorage.getInstance().getReference(); //getting the reference of the storage
         //that is the path to storage on the server is saved here

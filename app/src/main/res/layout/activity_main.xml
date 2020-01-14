@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/bkg2"
+    android:background="@drawable/background"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -15,7 +15,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="90dp"
         android:elevation="8dp"
-        android:src="@drawable/food"
+        android:src="@drawable/foodicon"
         app:layout_constraintEnd_toStartOf="@+id/option2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +28,7 @@
         android:layout_marginTop="55dp"
         android:layout_marginEnd="90dp"
         android:elevation="8dp"
-        android:src="@drawable/ml"
+        android:src="@drawable/visionicon"
         app:layout_constraintEnd_toStartOf="@+id/option6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/option3" />
@@ -40,7 +40,7 @@
         android:layout_marginTop="54dp"
         android:layout_marginEnd="36dp"
         android:elevation="8dp"
-        android:src="@drawable/atm"
+        android:src="@drawable/atmicon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/option4" />
 
@@ -52,7 +52,7 @@
         android:layout_marginTop="55dp"
         android:layout_marginEnd="90dp"
         android:elevation="8dp"
-        android:src="@drawable/beach"
+        android:src="@drawable/beachicon"
         app:layout_constraintEnd_toStartOf="@+id/option4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/option1" />
@@ -64,7 +64,7 @@
         android:layout_marginTop="55dp"
         android:layout_marginEnd="36dp"
         android:elevation="8dp"
-        android:src="@drawable/monuments"
+        android:src="@drawable/monumenticon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/option2" />
 
@@ -75,7 +75,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
         android:elevation="8dp"
-        android:src="@drawable/hotels"
+        android:src="@drawable/hotelicon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,9 +84,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
+        android:background="#555c5a"
         android:elevation="8dp"
         android:text="Trending"
+        android:textColor="#ffcea3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/option5" />
 
@@ -95,10 +97,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="94dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="50dp"
+        android:background="#555c5a"
         android:elevation="8dp"
         android:text="Top Rated"
+        android:textColor="#ffcea3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/option6" />
@@ -166,7 +170,7 @@
         android:id="@+id/imageView8"
         android:layout_width="94dp"
         android:layout_height="65dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="43dp"
         android:layout_marginTop="89dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"

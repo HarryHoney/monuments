@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#264653</color>
-    <color name="colorPrimaryDark">#264653</color>
+    <color name="colorPrimary">#3b7b2d</color>
+    <color name="colorPrimaryDark">#316725</color>
     <color name="colorAccent">#264653</color>
-    <color name="Inactive_Dots">#264653</color>
-    <color name="blue">#264653</color>
     <color name="red">#ee4353</color>
     <color name="glass">#48c3e8</color>
     <color name="button_color">#e76f51</color>
@@ -22,6 +20,7 @@
     <color name="PaleGoldenrod">#EEE8AA</color>
     <color name="Violet">#EE82EE</color>
     <color name="DarkSalmon">#E9967A</color>
+    <color name="black">#425C59</color>
     <color name="Lavender">#E6E6FA</color>
     <color name="LightCyan">#E0FFFF</color>
     <color name="BurlyWood">#DEB887</color>
@@ -31,7 +30,7 @@
     <color name="PaleVioletRed">#DB7093</color>
     <color name="Goldenrod">#DAA520</color>
     <color name="Orchid">#DA70D6</color>
-    <color name="Thistle">#D8BFD8</color>
+    <color name="button">#5a9f35</color>
     <color name="LightGrey">#D3D3D3</color>
     <color name="Tan">#D2B48C</color>
     <color name="Chocolate">#D2691E</color>

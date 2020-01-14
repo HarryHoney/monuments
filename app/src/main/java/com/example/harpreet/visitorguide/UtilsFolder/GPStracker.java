@@ -1,4 +1,4 @@
-package com.example.harpreet.visitorguide.sampledata;
+package com.example.harpreet.visitorguide.UtilsFolder;
 
 
 import android.Manifest;
@@ -37,13 +37,14 @@ public class GPStracker implements LocationListener{
         }
 
         lm=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-
-        if(isGPSenable())
+        boolean en = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if(en)
 
         {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,5,this);
-
             Location l=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(l==null)
+                Toast.makeText(context, "Location Accuracy Problem : Please move in 20 meters" , Toast.LENGTH_LONG).show();
 
             return l;
 
@@ -79,7 +80,7 @@ public class GPStracker implements LocationListener{
     @Override
 
     public void onLocationChanged(Location location) {
-
+//        Toast.makeText(context, "changed", Toast.LENGTH_SHORT).show();
     }
 
     @Override

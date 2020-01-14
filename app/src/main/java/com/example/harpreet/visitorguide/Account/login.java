@@ -1,5 +1,6 @@
 package com.example.harpreet.visitorguide.Account;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,22 +27,21 @@ public class login extends AppCompatActivity {
 
     private EditText email;
     private EditText password;
-    private ProgressBar progressBar;
     private Button login;
     private Button signup;
     FirebaseAuth mauth;
-
+    private ProgressBar dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ImageView imageView = findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.done);
+        dialog = findViewById(R.id.progressBar);
+        dialog.setVisibility(View.INVISIBLE);
+
         mauth=FirebaseAuth.getInstance();
         email=findViewById(R.id.signupemail);
         password=findViewById(R.id.signuppassword);
-        progressBar=findViewById(R.id.progressBar);
         login=findViewById(R.id.createbtn);
         signup=findViewById(R.id.signupbutton);
         login.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,8 @@ public class login extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(Password))
         {
-            progressBar.setVisibility(View.VISIBLE);
+
+            dialog.setVisibility(View.VISIBLE);
             mauth.signInWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -73,16 +74,18 @@ public class login extends AppCompatActivity {
                     {
                         startActivity(new Intent(login.this,MainActivity.class));
                         finish();
-//                        startActivity(new Intent(login.this,MLCamera.class));
+                        dialog.setVisibility(View.INVISIBLE);
                     }
                     else
                     {
                         String error=task.getException().getMessage();
-                        Toast.makeText(login.this,error,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(login.this,error,Toast.LENGTH_LONG).show();
+                        dialog.setVisibility(View.INVISIBLE);
                     }
 
                 }
             });
+
 
         }
         else
@@ -90,7 +93,7 @@ public class login extends AppCompatActivity {
             Toast.makeText(login.this,"Please Enter Both UserName & Password",Toast.LENGTH_SHORT).show();
         }
 
-        progressBar.setVisibility(View.INVISIBLE);
+
     }
     @Override
     protected void onStart() {

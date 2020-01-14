@@ -44,7 +44,6 @@ public class register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         mauth=FirebaseAuth.getInstance();
         reg_email=findViewById(R.id.signupemail);
         reg_password=findViewById(R.id.signuppassword);

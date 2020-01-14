@@ -24,12 +24,14 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.example.harpreet.visitorguide.sampledata.BitmapUtils;
-import com.example.harpreet.visitorguide.sampledata.GPStracker;
+import com.example.harpreet.visitorguide.UtilsFolder.BitmapUtils;
+import com.example.harpreet.visitorguide.UtilsFolder.GPStracker;
+import com.example.harpreet.visitorguide.UtilsFolder.PointsData;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
+import java.io.IOException;
 
 import eu.livotov.labs.android.camview.CameraLiveView;
 import eu.livotov.labs.android.camview.camera.PictureProcessingCallback;
@@ -44,6 +46,7 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
     private SensorManager mSensorManager;
     CameraLiveView cameraLiveView;
     PictureProcessingCallback callback;
+    private ObjectMapper mapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +124,7 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
         mSensorManager.unregisterListener(this);
     }
 
-    void addSpots(double data[][]){
+    void addSpots(PointsData data[]){
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.direction);
         Canvas canvas = new Canvas();
@@ -132,9 +135,9 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.YELLOW);
-        for(int i=0;i<data[0].length;i++){
-            float x = (float) (a/2 + data[0][i]*Math.sin(Math.toRadians(data[1][i]))*((0.303*a)/(double)1500));
-            float y = (float) (b/2 - data[0][i]*Math.cos(Math.toRadians(data[1][i]))*((0.303*a)/(double)1500));
+        for(int i=0;i<data.length;i++){
+            float x = (float) (a/2 + (data[i].getDistance())*Math.sin(Math.toRadians(data[i].getDegree()))*((0.303*a)/(double)1500));
+            float y = (float) (b/2 - (data[i].getDistance())*Math.cos(Math.toRadians(data[i].getDegree()))*((0.303*a)/(double)1500));
             canvas.drawCircle(x,y,25,paint);
         }
         image.setImageBitmap(copy);
@@ -145,61 +148,49 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
         super.onStart();
         gps = new GPStracker(this);
         l = gps.getLocation();
-        double arr[][]=new double[2][6];
-        arr[0][0]=1500;arr[1][0]=285;
-        arr[0][1]=1200;arr[1][1]=80;
-        arr[0][2]=0;arr[1][2]=70;
-        arr[0][3]=900;arr[1][3]=290;
-        arr[0][4]=223;arr[1][4]=15;
-        arr[0][5]=169;arr[1][5]=170;
-        addSpots(arr);
-//        if(gps!=null) {
-//            dialog = ProgressDialog.show(this, "Hi User",
-//                    "Loading. Please wait...", true);
-//            l = gps.getLocation();
-//            String key = getIntent().getStringExtra("key");
-//            AndroidNetworking.get("heroku api")
-//                    .setPriority(Priority.MEDIUM)
-//                    .addQueryParameter("key",key)
-//                    .addQueryParameter("lat",l.getLatitude()+"")
-//                    .addQueryParameter("long",l.getLongitude()+"")
-//                    .build()
-//                    .getAsJSONArray(new JSONArrayRequestListener() {
-//
-//                        @Override
-//                        public void onResponse(JSONArray response) {
-//
-//                            double points[][] = new double[2][response.length()];
-//                            for(int i=0;i<response.length();i++)
-//                            {
-//                                JSONObject obj=null;
-//                                try {
-//                                    obj= (JSONObject) response.get(i);
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                try {
-//                                    String dis = (String) obj.get("distance");
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                points[1][i]=9;
-//                            }
-//                            dialog.dismiss();
-//                        }
-//
-//                        @Override
-//                        public void onError(ANError anError) {
-//                        Toast.makeText(Camera.this, "Sorry some error occurred", Toast.LENGTH_SHORT).show();
-//                            dialog.dismiss();
-//                        }
-//                    });
-//        }
-//        else
-//        {
-//            Toast.makeText(this, "Unable to fetch location", Toast.LENGTH_SHORT).show();
-//            finish();
-//        }
+        final ObjectMapper mapper = new ObjectMapper();
+
+        if(gps!=null) {
+            dialog = ProgressDialog.show(this, "Hi User",
+                    "Loading. Please wait...", true);
+            l = gps.getLocation();
+            String key = getIntent().getStringExtra("key");
+            AndroidNetworking.get("https://us-central1-monuments-5eabc.cloudfunctions.net/app/dummy")
+                    .setPriority(Priority.MEDIUM)
+                    .addQueryParameter("key",key)
+                    .addQueryParameter("lat",l.getLatitude()+"")
+                    .addQueryParameter("long",l.getLongitude()+"")
+                    .build()
+                    .getAsJSONArray(new JSONArrayRequestListener() {
+
+                        @Override
+                        public void onResponse(JSONArray response) {
+
+                            String json = response.toString();
+                            try {
+
+                                // 1. convert JSON array to Array objects
+                                PointsData[] data = mapper.readValue(json, PointsData[].class);
+                                addSpots(data);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                        Toast.makeText(Camera.this, "Sorry some error occurred", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    });
+        }
+        else
+        {
+            Toast.makeText(this, "Unable to fetch location", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
 

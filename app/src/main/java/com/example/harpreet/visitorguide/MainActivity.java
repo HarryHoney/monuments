@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 import com.example.harpreet.visitorguide.Account.login;
 import com.example.harpreet.visitorguide.Account.setup;
-import com.example.harpreet.visitorguide.sampledata.GPStracker;
+import com.example.harpreet.visitorguide.UtilsFolder.GPStracker;
 import com.google.firebase.auth.FirebaseAuth;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("key","temples");
                 startActivity(intent);}
                 else{makeaToast();}
-
             }
         });
 
@@ -67,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
                 intent.putExtra("key","");
-                startActivity(intent);}else{makeaToast();}
+                startActivity(intent);}
+                else{makeaToast();}
             }
         });
 

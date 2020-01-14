@@ -1,4 +1,4 @@
-package com.example.harpreet.visitorguide.sampledata;
+package com.example.harpreet.visitorguide.UtilsFolder;
 
 
 import android.graphics.Bitmap;
