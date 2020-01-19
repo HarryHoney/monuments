@@ -34,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <!--<activity android:name=".helper"></activity>-->
+         <activity android:name=".helper"></activity>
         <activity android:name=".Account.login" />
         <activity android:name=".Account.setup" />
         <activity android:name=".Account.register" />

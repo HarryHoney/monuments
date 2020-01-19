@@ -14,10 +14,14 @@ import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -26,12 +30,17 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.harpreet.visitorguide.UtilsFolder.BitmapUtils;
 import com.example.harpreet.visitorguide.UtilsFolder.GPStracker;
+import com.example.harpreet.visitorguide.UtilsFolder.MyListAdapter;
 import com.example.harpreet.visitorguide.UtilsFolder.PointsData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import eu.livotov.labs.android.camview.CameraLiveView;
 import eu.livotov.labs.android.camview.camera.PictureProcessingCallback;
@@ -41,18 +50,17 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
     private ImageView image;
     GPStracker gps;
     Location l;
+    ListView listView;
     ProgressDialog dialog;
     private float currentDegree = 0f;
     private SensorManager mSensorManager;
     CameraLiveView cameraLiveView;
     PictureProcessingCallback callback;
-    private ObjectMapper mapper;
-
+    private ArrayList<PointsData> arrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-
         cameraLiveView = findViewById(R.id.cam_camera);
         cameraLiveView.startCamera();
 
@@ -79,16 +87,15 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
                 cameraLiveView.startCamera();
             }
         };
-
     }
-
-
 
     public void SearchPlace(View view) {
         if(cameraLiveView.getController()!=null)
         cameraLiveView.getController().takePicture(callback);
     }
 
+    int count=0;
+    int degree_prev=0;
     @Override
     public void onSensorChanged(SensorEvent event) {
 
@@ -103,6 +110,43 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
         ra.setFillAfter(true);
         image.startAnimation(ra);
         currentDegree = -degree;
+        if(count>20)
+        {
+            count=0;
+            ArrayList<PointsData> list = new ArrayList<>();
+            float left = (degree-30);
+            if(left<0)left+=360;
+            float right = degree+30;
+            if(right>360)
+                right=right-360;
+            for(int i=0;i<arrayList.size()&&i<8;i++)
+            {
+                float pointDegree = (float) arrayList.get(i).getDegree();
+                if( (pointDegree>=left&&pointDegree<=right) )
+                    list.add(arrayList.get(i));
+            }
+            String name[]=new String[list.size()];
+            String dis[]=new String[list.size()];
+            String img[]=new String[list.size()];
+            for(int i=0;i<list.size();i++)
+            {
+                name[i] = list.get(i).getName();
+                dis[i] = list.get(i).getDistance()+"";
+
+            }
+            MyListAdapter adapter = new MyListAdapter(this,name,dis);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                }
+            });
+        }
+        if(degree_prev!=(int)degree)
+        count++;
+            degree_prev= (int) degree;
+
     }
 
     @Override
@@ -141,11 +185,27 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
             canvas.drawCircle(x,y,25,paint);
         }
         image.setImageBitmap(copy);
+
+        Collections.sort(Arrays.asList(data),new Comparator<PointsData>(){
+
+            @Override
+            public int compare(PointsData one, PointsData two) {
+                Double aa = new Double(one.getDistance());
+                Double bb = new Double(two.getDistance());
+                return aa.compareTo(bb);
+            }
+        });
+        for(int i=0;i<data.length;i++)
+        {
+            arrayList.add(data[i]);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        arrayList = new ArrayList<>();
+        listView = findViewById(R.id.placelist);
         gps = new GPStracker(this);
         l = gps.getLocation();
         final ObjectMapper mapper = new ObjectMapper();
@@ -155,7 +215,7 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
                     "Loading. Please wait...", true);
             l = gps.getLocation();
             String key = getIntent().getStringExtra("key");
-            AndroidNetworking.get("https://us-central1-monuments-5eabc.cloudfunctions.net/app/dummy")
+            AndroidNetworking.get("https://function1.herokuapp.com/locationDetails")
                     .setPriority(Priority.MEDIUM)
                     .addQueryParameter("key",key)
                     .addQueryParameter("lat",l.getLatitude()+"")
@@ -166,14 +226,16 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
                         @Override
                         public void onResponse(JSONArray response) {
 
+
                             String json = response.toString();
                             try {
 
-                                // 1. convert JSON array to Array objects
+
                                 PointsData[] data = mapper.readValue(json, PointsData[].class);
                                 addSpots(data);
 
                             } catch (IOException e) {
+                                Toast.makeText(Camera.this, "error render", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                             dialog.dismiss();

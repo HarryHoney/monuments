@@ -200,12 +200,14 @@ public class MLCamera extends AppCompatActivity {
                         desc.setText(name+" : "+response);
                         //inc count of res place
                         dialog.dismiss();
+                        bar.setVisibility(View.INVISIBLE);
 
                     }
                     @Override
                     public void onError(ANError error) {
                         Toast.makeText(MLCamera.this, "Ashu:"+error.toString(), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();bar.setVisibility(View.INVISIBLE);
+                        dialog.dismiss();
+                        bar.setVisibility(View.INVISIBLE);
                     }
                 });
 

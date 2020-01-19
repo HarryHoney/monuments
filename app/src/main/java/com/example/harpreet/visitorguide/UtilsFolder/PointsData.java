@@ -27,26 +27,41 @@ public class PointsData {
     }
 
     public double getDegree() {
-        return degree;
+        return degrees;
     }
 
-    public void setDegree(double degree) {
-        this.degree = degree;
+    public void setDegrees(double degree) {
+        this.degrees = degree;
     }
 
     String name;
     String icon;
     double distance;
-    double degree;
+    double degrees;
+
+    public double getDegrees() {
+        return degrees;
+    }
+
+    public String getPlace_id() {
+        return place_id;
+    }
+
+    public void setPlace_id(String place_id) {
+        this.place_id = place_id;
+    }
+
+    String place_id;
 
     public PointsData() {
     }
 
-    public PointsData(String name, String icon, double distance, double degree) {
+    public PointsData(String name, String icon, double distance, double degree,String place_id) {
         this.name = name;
         this.icon = icon;
         this.distance = distance;
-        this.degree = degree;
+        this.degrees = degree;
+        this.place_id = place_id;
     }
 
 

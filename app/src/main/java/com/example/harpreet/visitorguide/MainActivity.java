@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
-                intent.putExtra("key","temples");
+                intent.putExtra("key","food");
                 startActivity(intent);}
                 else{makeaToast();}
             }
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
-                intent.putExtra("key","");
+                intent.putExtra("key","hotels");
                 startActivity(intent);}
                 else{makeaToast();}
             }
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
-                intent.putExtra("key","");
+                intent.putExtra("key","Beaches");
                 startActivity(intent);}
                 else{makeaToast();}
             }
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
-                intent.putExtra("key","");
+                intent.putExtra("key","Monuments");
                 startActivity(intent);}
                 else
                 {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 l = gps.getLocation();
                 if(l!=null){
                 intent = new Intent(getBaseContext(),Camera.class);
-                intent.putExtra("key","");
+                intent.putExtra("key","ATMS");
                 startActivity(intent);}else{makeaToast();}
             }
         });

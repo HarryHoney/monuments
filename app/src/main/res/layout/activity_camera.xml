@@ -56,6 +56,13 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         app:srcCompat="@drawable/direction" />
-
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:textAlignment="gravity"
+        android:id="@+id/placelist"
+        >
+    </ListView>
 
 </FrameLayout>
