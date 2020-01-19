@@ -14,12 +14,10 @@ import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -30,7 +28,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.harpreet.visitorguide.UtilsFolder.BitmapUtils;
 import com.example.harpreet.visitorguide.UtilsFolder.GPStracker;
-import com.example.harpreet.visitorguide.UtilsFolder.MyListAdapter;
+import com.example.harpreet.visitorguide.UtilsFolder.ListAdapter;
 import com.example.harpreet.visitorguide.UtilsFolder.PointsData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -134,7 +132,7 @@ public class Camera extends AppCompatActivity implements SensorEventListener {
                 dis[i] = list.get(i).getDistance()+"";
 
             }
-            MyListAdapter adapter = new MyListAdapter(this,name,dis);
+            ListAdapter adapter = new ListAdapter(this,name,dis);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

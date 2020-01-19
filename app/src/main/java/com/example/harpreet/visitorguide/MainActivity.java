@@ -195,5 +195,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }//function ends here
 
+    public void newlocation(View view) {
+
+        startActivity(new Intent(this,location.class));
+
+    }
+
+    public void trending(View view) {
+
+        startActivity(new Intent(this,places.class));
+
+    }
 }
 

@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.harpreet.visitorguide">
 
+    <permission
+        android:name="com.example.harpreet.visitorguide.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.harpreet.visitorguide.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -9,7 +17,8 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.Camera" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,14 +27,19 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
+        android:hardwareAccelerated="true"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <meta-data
             android:name="com.google.android.geo.API_Key"
             android:value="@string/key" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBkAzfKBlGnNMqWtrxO-84oY2hAgqUmaJw" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -35,11 +49,14 @@
             </intent-filter>
         </activity>
          <activity android:name=".helper"></activity>
+        <activity android:name=".listCheck" />
+        <activity android:name=".places" />
+        <activity android:name=".location" />
         <activity android:name=".Account.login" />
         <activity android:name=".Account.setup" />
         <activity android:name=".Account.register" />
-         <activity android:name=".Camera" />
-        <activity android:name=".MLCamera"></activity>
+        <activity android:name=".Camera" />
+        <activity android:name=".MLCamera" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
